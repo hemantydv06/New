@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# 🔥 LIGHTWEIGHT RED THEME - DEPLOYMENT READY ✨
+# 🔥 PERFECT CSS - FIXED TEXT VISIBILITY ✨
 st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
@@ -16,18 +16,30 @@ st.markdown("""
     }
     
     .glow-card {
-        background: rgba(255, 255, 255, 0.95) !important;
+        background: rgba(255, 255, 255, 0.98) !important;
         border-radius: 20px !important;
         padding: 2rem !important;
         margin: 1.5rem 0 !important;
         box-shadow: 0 20px 40px rgba(220, 38, 38, 0.3) !important;
-        border: 1px solid rgba(255, 255, 255, 0.4) !important;
+        border: 1px solid rgba(220, 38, 38, 0.2) !important;
         transition: all 0.3s ease !important;
+        color: #1f2937 !important;
     }
     
     .glow-card:hover {
         transform: translateY(-5px) !important;
         box-shadow: 0 30px 60px rgba(220, 38, 38, 0.4) !important;
+    }
+    
+    .glow-card h3 {
+        color: #1f2937 !important;
+        font-weight: 700 !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .glow-card p, .glow-card li, .glow-card ul {
+        color: #374151 !important;
+        line-height: 1.6 !important;
     }
     
     .stButton > button {
@@ -36,6 +48,12 @@ st.markdown("""
         color: white !important;
         font-weight: 700 !important;
         box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4) !important;
+        padding: 12px 24px !important;
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-2px) !important;
+        box-shadow: 0 15px 35px rgba(220, 38, 38, 0.5) !important;
     }
     
     h1 {
@@ -43,6 +61,14 @@ st.markdown("""
         -webkit-background-clip: text !important;
         -webkit-text-fill-color: transparent !important;
         background-clip: text !important;
+        font-weight: 800 !important;
+        text-shadow: 0 0 30px rgba(220, 38, 38, 0.4) !important;
+    }
+    
+    h2 {
+        color: #1f2937 !important;
+        text-align: center !important;
+        font-weight: 700 !important;
     }
     
     .footer-glow {
@@ -51,6 +77,19 @@ st.markdown("""
         padding: 2rem !important;
         text-align: center !important;
         box-shadow: 0 20px 40px rgba(220, 38, 38, 0.4) !important;
+        color: white !important;
+        margin-top: 3rem !important;
+    }
+    
+    .footer-glow a {
+        color: #fef3c7 !important;
+        text-decoration: none !important;
+    }
+    
+    .stSuccess {
+        background: rgba(34, 197, 94, 0.1) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(34, 197, 94, 0.3) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -75,17 +114,18 @@ if 'selected_symptoms' not in st.session_state:
 if 'user_input' not in st.session_state:
     st.session_state.user_input = ""
 
-# HEADER
+# HEADER ✨
 st.markdown("""
 <div style='text-align: center; padding: 3rem 2rem; background: rgba(255,255,255,0.15); 
             border-radius: 30px; margin: 0 auto 3rem; max-width: 900px;
-            box-shadow: 0 25px 50px rgba(220, 38, 38, 0.3); border: 1px solid rgba(255,255,255,0.3);'>
+            box-shadow: 0 25px 50px rgba(220, 38, 38, 0.3); 
+            border: 1px solid rgba(255,255,255,0.3); backdrop-filter: blur(10px);'>
     <h1 style='font-size: 3.5rem; margin: 0 0 1rem 0;'>🪔 AyurVaidya Assist</h1>
-    <p style='color: rgba(255,255,255,0.95); font-size: 1.4rem;'>✨ AI-Powered Ayurvedic Healing ✨</p>
+    <p style='color: rgba(255,255,255,0.95); font-size: 1.4rem; margin: 0; font-weight: 400;'>✨ AI-Powered Ayurvedic Healing ✨</p>
 </div>
 """, unsafe_allow_html=True)
 
-# INFO CARDS
+# INFO CARDS ✨
 col1, col2 = st.columns([2,1])
 with col1:
     st.markdown("""
@@ -94,7 +134,7 @@ with col1:
         <p><strong>5000-year-old system</strong> used by <strong>1B+ people worldwide</strong></p>
         <ul>
             <li>✅ <strong>80% fewer side effects</strong> vs allopathy</li>
-            <li>✅ Treats <strong>root cause</strong></li>
+            <li>✅ Treats <strong>root cause</strong> (not symptoms)</li>
             <li>✅ Covers <strong>90% common diseases</strong></li>
             <li>✅ Uses <strong>kitchen ingredients</strong></li>
         </ul>
@@ -119,15 +159,15 @@ st.markdown("---")
 
 # Safety checks
 col1, col2 = st.columns(2)
-seen_doctor = col1.checkbox("✅ Already consulting doctor?", key="doctor")
-emergency = col2.checkbox("🚨 Emergency symptoms?", key="emergency")
+seen_doctor = col1.checkbox("✅ Already consulting doctor?", key="doctor_check")
+emergency = col2.checkbox("🚨 Emergency symptoms?", key="emergency_check")
 
 if seen_doctor or emergency:
     st.error("👨‍⚕️ **Consult doctor first**" if seen_doctor else "🚨 **MEDICAL EMERGENCY**")
     st.stop()
 
-# Symptom Input
-st.markdown('<h2 style="text-align: center; margin: 2rem 0;">📝 Your Symptoms</h2>', unsafe_allow_html=True)
+# Symptom Input ✨
+st.markdown('<h2 style="color: #1f2937; margin: 2.5rem 0 2rem 0;">📝 Your Symptoms</h2>', unsafe_allow_html=True)
 
 col1, col2 = st.columns([3,1])
 with col1:
@@ -138,13 +178,12 @@ with col1:
         help="Type multiple symptoms separated by commas"
     )
 with col2:
-    if st.button("🗑️ **CLEAR ALL**", key="clear_btn", use_container_width=True):
+    if st.button("🗑️ **CLEAR ALL**", key="clear_all_btn", use_container_width=True):
         st.session_state.selected_symptoms = []
         st.session_state.user_input = ""
         st.success("✨ Cleared! Start fresh.")
         st.rerun()
 
-# Update session state
 st.session_state.user_input = user_input
 
 # Selected symptoms display
@@ -152,25 +191,25 @@ selected_symptoms = st.session_state.selected_symptoms.copy()
 if selected_symptoms:
     st.success(f"✅ **{len(selected_symptoms)} symptoms selected**: {', '.join(selected_symptoms)}")
 
-# Smart suggestions - BUTTONS ONLY (NO CHECKBOXES)
+# Smart suggestions - BUTTONS ONLY
 if user_input:
     matching = symptoms_df[symptoms_df['symptom'].str.contains(user_input.lower(), case=False, na=False)]
     if not matching.empty:
-        st.markdown('<p style="font-weight:700; color:#1f2937; margin-top:1.5rem;">🔍 **Suggested Symptoms:**</p>', unsafe_allow_html=True)
+        st.markdown('<p style="font-weight:700; color:#1f2937; margin:1.5rem 0 1rem 0;">🔍 **Suggested Symptoms:**</p>', unsafe_allow_html=True)
         cols = st.columns(4)
         for i, symptom in enumerate(matching['symptom'].head(12)):
-            if cols[i%4].button(symptom, key=f"suggest_{i}", use_container_width=True):
+            if cols[i%4].button(symptom, key=f"suggest_btn_{i}", use_container_width=True):
                 if symptom not in selected_symptoms:
                     selected_symptoms.append(symptom)
                     st.session_state.selected_symptoms.append(symptom)
                     st.rerun()
 
 # Common symptoms - BUTTONS ONLY
-st.markdown('<p style="font-weight:700; color:#1f2937;">🔥 **Quick Common Symptoms:**</p>', unsafe_allow_html=True)
+st.markdown('<p style="font-weight:700; color:#1f2937; margin:2rem 0 1rem 0;">🔥 **Quick Common Symptoms:**</p>', unsafe_allow_html=True)
 cols = st.columns(4)
 common = ['Cough', 'Fever', 'Fatigue', 'Headache', 'Joint pain', 'Sore throat']
 for i, sym in enumerate(common):
-    if cols[i%4].button(sym, key=f"common_{i}", use_container_width=True):
+    if cols[i%4].button(sym, key=f"common_btn_{i}", use_container_width=True):
         if sym not in selected_symptoms:
             selected_symptoms.append(sym)
             st.session_state.selected_symptoms.append(sym)
@@ -178,14 +217,16 @@ for i, sym in enumerate(common):
 
 st.session_state.selected_symptoms = selected_symptoms
 
-if len(selected_symptoms) < 1:
+if len(selected_symptoms) < 2:
     st.warning("⚠️ **Please select 2+ symptoms for analysis**")
+    st.markdown("---")
     st.stop()
 
-# AI Analysis
-st.markdown('<h2 style="text-align: center;">🔬 AI Analysis Results</h2>', unsafe_allow_html=True)
+# AI Analysis ✨
+st.markdown('<h2 style="color: #1f2937; text-align: center; margin: 3rem 0;">🔬 AI Analysis Results</h2>', unsafe_allow_html=True)
 progress = st.progress(0)
 
+# TF-IDF Analysis
 df['match_text'] = df['symptoms'].fillna('') + ' ' + df['risk_factors'].fillna('') + ' ' + df['environmental_factors'].fillna('')
 tfidf = TfidfVectorizer(max_features=1000, stop_words='english')
 disease_vectors = tfidf.fit_transform(df['match_text'])
@@ -222,7 +263,7 @@ for i, idx in enumerate(top_matches):
                 if pd.notna(diet):
                     st.info(f"**🍎 Diet**: {str(diet)[:200]}...")
 
-# FOOTER
+# OWNER FOOTER ✨
 st.markdown("""
 <div class="footer-glow">
     <h3 style='color: white; margin-bottom: 1.2rem;'>✨ AyurVaidya Assist ✨</h3>
@@ -233,7 +274,7 @@ st.markdown("""
         👨‍💻 <strong>Created by:</strong> <a href='mailto:yadavhemant1002@gmail.com'>Hemant Yadav</a> 
         | 📧 <a href='mailto:yadavhemant1002@gmail.com'>yadavhemant1002@gmail.com</a>
     </p>
-    <p style='color: rgba(255,255,255,0.85);'>
+    <p style='color: rgba(255,255,255,0.85); font-size: 1rem;'>
         ⚠️ <em>Not medical advice - consult your doctor</em>
     </p>
 </div>
