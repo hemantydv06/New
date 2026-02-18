@@ -19,7 +19,9 @@ if st.checkbox("✅ Seen doctor?"):
 st.header("📋 Your Symptoms")
 selected = []
 for _, row in symptoms_list.iterrows():
-    if st.checkbox(row['symptom']):
+   # ✅ CORRECT - UNIQUE KEYS
+    if st.checkbox(row['symptom'], key=f"symptom_{i}"):  # i = loop index
+
         selected.append(row['symptom'])
 
 if not selected:
